@@ -1,0 +1,49 @@
+/* Extracted from inline styles and JavaScript manipulations */
+.interstitial-wrapper {
+    /* Container for the game */
+}
+
+.hidden {
+    display: none;
+}
+
+.runner-canvas {
+    /* Default canvas styling */
+}
+
+.runner-container {
+    /* Container styling */
+}
+
+.crashed {
+    /* Style when game is crashed */
+}
+
+.controller {
+    /* Touch controller styling */
+}
+
+.onlyforchrome {
+    text-align: center;
+    padding-top: 65px;
+}
+
+.addthis_toolbox table {
+    margin: 0 auto;
+}
+
+/* Animation keyframes extracted from JavaScript */
+@-webkit-keyframes intro {
+    from { width: 44px; } /* Assuming Trex.config.WIDTH is 44px */
+    to { width: 600px; }  /* Runner.defaultDimensions.WIDTH */
+}
+
+/* Additional styles inferred from behavior */
+.runner-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.runner-canvas {
+    background-color: #f7f7f7; /* From canvasCtx.fillStyle */
+}
