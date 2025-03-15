@@ -29,9 +29,6 @@
         myClasses[i].style.display = 'none';
       }
 	}
-    // Copyright (c) 2014 The Chromium Authors. All rights reserved.
-    // Use of this source code is governed by a BSD-style license that can be
-    // found in the LICENSE file.
     (function() {
     'use strict';
     /**
@@ -2010,7 +2007,69 @@ button:hover {
 #error-debugging-info {
   font-size: 0.8em;
 }
+/* Center the entire game and ad layout */
+        .game-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0 auto;
+            max-width: 1200px; /* Adjust as needed */
+        }
 
+        /* Flex container for the game and side ads */
+        .game-row {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        /* Game container styling */
+        .interstitial-wrapper {
+            position: relative;
+            width: 600px; /* Default game width */
+            height: 150px; /* Default game height */
+        }
+
+        /* Ad section styling */
+        .ad-section {
+            background-color: #f0f0f0; /* Placeholder color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .ad-left {
+            width: 160px; /* Standard ad width */
+            height: 600px; /* Standard skyscraper ad height */
+            margin-right: 20px;
+        }
+
+        .ad-right {
+            width: 160px; /* Standard ad width */
+            height: 600px; /* Standard skyscraper ad height */
+            margin-left: 20px;
+        }
+
+        .ad-bottom {
+            width: 728px; /* Standard leaderboard ad width */
+            height: 90px; /* Standard leaderboard ad height */
+            margin-top: 20px;
+        }
+
+        /* Hide ads on small screens if needed */
+        @media (max-width: 900px) {
+            .ad-left, .ad-right {
+                display: none;
+            }
+            .ad-bottom {
+                width: 100%;
+                max-width: 600px;
+            }
 h1 {
   -webkit-margin-after: 16px;
   color: #585858;
