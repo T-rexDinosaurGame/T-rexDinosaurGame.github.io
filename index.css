@@ -196,7 +196,76 @@ header {
 /* Content Wrapper */
 .content-wrapper {
     padding: 20px;
-    padding-bottom: 80px; /* Space for the footer */
+    padding-bottom: 150px; /* Increased padding to account for ad sections and footer */
+}
+
+/* Ad Sections */
+.ad-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.ad-section {
+    background-color: #fff; /* White background for ad sections */
+    border: 1px solid #ddd; /* Subtle border */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#ad-section-1 {
+    width: 728px; /* Standard banner ad size */
+    height: 90px;
+}
+
+#ad-section-2 {
+    width: 300px; /* Standard medium rectangle ad size */
+    height: 250px;
+}
+
+.ad-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #666;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+/* Responsive adjustments for ad sections */
+@media (max-width: 768px) {
+    #ad-section-1 {
+        width: 100%;
+        max-width: 468px; /* Smaller banner size for smaller screens */
+        height: 60px;
+    }
+    #ad-section-2 {
+        width: 100%;
+        max-width: 300px;
+        height: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    #ad-section-1 {
+        max-width: 320px; /* Even smaller banner for mobile */
+        height: 50px;
+    }
+    #ad-section-2 {
+        max-width: 250px;
+        height: 200px;
+    }
 }
 
 /* Footer Styling */
@@ -242,7 +311,7 @@ footer {
     margin: 0 0.25rem; /* Reduced margin for tighter spacing */
 }
 
-/* Responsive adjustments for smaller screens */
+/* Responsive adjustments for footer */
 @media (max-width: 600px) {
     .footer-content {
         flex-wrap: wrap; /* Allow wrapping on small screens */
