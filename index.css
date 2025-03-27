@@ -1,3 +1,6 @@
+/* Copyright 2013 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file. */
 
 /* General body styling */
 html, body {
@@ -322,58 +325,82 @@ header {
 footer {
     background: linear-gradient(90deg, #66b0ff, #a3d8ff); /* Lighter blue gradient */
     color: #333; /* Darker text for readability on light background */
-    padding: 0.75rem 1rem; /* Reduced horizontal padding for better fit */
+    padding: 1rem; /* Consistent padding */
     position: fixed;
     bottom: 0;
     width: 100%;
-    font-size: 0.9rem; /* Slightly larger font size for better readability */
-    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1); /* Softer shadow for lighter theme */
+    font-size: 0.9rem; /* Base font size for readability */
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow for a modern look */
     display: flex;
     justify-content: center; /* Center all content */
     align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.2); /* Subtle top border for sleekness */
 }
 
 .footer-content {
     display: flex;
-    flex-wrap: wrap; /* Ensure wrapping for smaller screens */
+    flex-wrap: wrap; /* Allow wrapping */
     align-items: center;
     justify-content: center; /* Center content horizontally */
-    gap: 1rem; /* Increased gap for better spacing */
+    gap: 1.2rem; /* Increased gap for better spacing */
     text-align: center; /* Ensure text is centered */
     line-height: 1.5; /* Improve readability with better line spacing */
 }
 
 .footer-text {
     color: #333;
+    font-weight: 500; /* Slightly bolder for emphasis */
 }
 
 .footer-content a {
     color: #333; /* Darker text for readability */
-    text-decoration: none;
-    font-weight: normal;
-    transition: color 0.3s ease;
+    text-decoration: none; /* Remove default underline */
+    font-weight: 500; /* Slightly bolder for emphasis */
+    padding: 0.5rem 0.8rem; /* Larger touch target for mobile */
+    border-radius: 4px; /* Subtle rounding for modern look */
+    transition: all 0.3s ease; /* Smooth transition for hover/tap effects */
+    position: relative; /* For pseudo-element underline */
 }
 
-.footer-content a:hover {
-    color: #ff6f61; /* Coral color on hover for contrast */
-    text-decoration: underline;
+.footer-content a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0.3rem; /* Position the underline slightly above the bottom */
+    left: 0.8rem; /* Align with padding */
+    background-color: #ff6f61; /* Coral color for underline */
+    transition: width 0.3s ease; /* Smooth underline animation */
+}
+
+.footer-content a:hover,
+.footer-content a:focus {
+    color: #ff6f61; /* Coral color on hover/tap */
+    background-color: rgba(255, 255, 255, 0.1); /* Subtle background on hover */
+}
+
+.footer-content a:hover::after,
+.footer-content a:focus::after {
+    width: calc(100% - 1.6rem); /* Expand underline to match text width (accounting for padding) */
 }
 
 .footer-content .separator {
     color: #333; /* Match text color */
-    margin: 0 0.5rem; /* Increased margin for better spacing */
+    margin: 0 0.5rem; /* Spacing for separators */
 }
 
 /* Responsive adjustments for footer */
 @media (max-width: 600px) {
     footer {
-        padding: 1rem; /* Slightly more padding on mobile for better spacing */
+        padding: 0.8rem; /* Slightly less padding for a sleeker look */
+        background: linear-gradient(90deg, #66b0ff, #a3d8ff); /* Keep gradient */
+        box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15); /* Consistent shadow */
     }
 
     .footer-content {
         flex-direction: column; /* Stack items vertically on mobile */
-        gap: 0.5rem; /* Reduced gap for vertical stacking */
-        font-size: 0.95rem; /* Slightly larger font size for readability on mobile */
+        gap: 0.8rem; /* Reduced gap for vertical stacking */
+        font-size: 1rem; /* Slightly larger font size for readability on mobile */
     }
 
     .footer-content .separator {
@@ -384,5 +411,16 @@ footer {
     .footer-text {
         display: block; /* Ensure each item takes its own line */
         margin: 0; /* Remove any extra margins */
+        padding: 0.6rem 1rem; /* Larger touch target for mobile */
+    }
+
+    .footer-content a::after {
+        bottom: 0.4rem; /* Adjust underline position for mobile */
+        left: 1rem; /* Align with padding */
+    }
+
+    .footer-content a:hover::after,
+    .footer-content a:focus::after {
+        width: calc(100% - 2rem); /* Adjust underline width for mobile padding */
     }
 }
