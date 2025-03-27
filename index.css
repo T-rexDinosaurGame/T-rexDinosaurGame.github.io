@@ -174,11 +174,11 @@ html, body {
 
 /* Header Styling */
 header {
-    background: linear-gradient(90deg, #1a3c34, #2874a6); /* Beautiful teal to blue gradient */
+    background: linear-gradient(90deg, #4da8da, #8ecae6); /* Light teal to light blue gradient */
     display: flex;
     align-items: center;
     padding: 1rem 2rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Softer shadow for lighter theme */
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -201,8 +201,8 @@ header {
 
 /* Footer Styling */
 footer {
-    background: linear-gradient(90deg, #007bff, #00c4ff); /* Blue gradient matching the image */
-    color: white;
+    background: linear-gradient(90deg, #66b0ff, #a3d8ff); /* Lighter blue gradient */
+    color: #333; /* Darker text for readability on light background */
     padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
@@ -211,7 +211,7 @@ footer {
     bottom: 0;
     width: 100%;
     font-size: 0.9rem;
-    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1); /* Softer shadow for lighter theme */
 }
 
 .footer-left {
@@ -225,18 +225,18 @@ footer {
 }
 
 .footer-right a {
-    color: white;
+    color: #333; /* Darker text for readability */
     text-decoration: none;
     font-weight: normal;
     transition: color 0.3s ease;
 }
 
 .footer-right a:hover {
-    color: #ffeb3b; /* Yellow on hover for contrast */
+    color: #ff6f61; /* Coral color on hover for contrast */
     text-decoration: underline;
 }
 
 .footer-right .separator {
-    color: white;
+    color: #333; /* Match text color */
     margin: 0 0.5rem;
 }
