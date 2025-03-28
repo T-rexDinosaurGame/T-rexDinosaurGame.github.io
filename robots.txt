@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /index.html
+Allow: /dino-game-preview.jpg
+Allow: /sitemap.xml
+Disallow: /index.css
+Disallow: /index.js
+Disallow: /index.js
+Disallow: /offline-resources-1x.png
+Disallow: /offline-resources-2x.png
