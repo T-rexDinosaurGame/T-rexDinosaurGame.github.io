@@ -110,6 +110,146 @@
             </div>
         </footer>
     </body>
+    I understand the issues you're facing on mobile:
+
+Page Not Scrollable: The page cannot be scrolled on mobile devices, likely because a touch event listener is preventing the default scrolling behavior.
+Not Touchable (Links Not Working): Tapping on links (e.g., in the footer) doesn’t work because the touch event listener is capturing all touch events and starting the game instead.
+Game Starts When Tapping Anywhere: Tapping anywhere on the screen starts the game, which we’ve been trying to fix by ensuring the game only starts when tapping within the game section (#main-frame-error).
+These issues are interconnected and stem from how touch events are being handled. The root cause is likely in index.js, where a touchstart event listener on the document is capturing all touch events, preventing default behaviors (like scrolling and link tapping), and starting the game regardless of where the user taps.
+
+Since I don’t have access to index.js, I’ll provide a solution by modifying the index.html script to:
+
+Fix the scrolling issue by allowing default touch behavior outside the game section.
+Fix the touchability issue by ensuring links (e.g., in the footer) can be tapped without starting the game.
+Fix the game-starting issue by ensuring the game only starts when tapping within the game section.
+I’ll also provide detailed instructions to modify index.js to address the root cause.
+
+Step 1: Fix the Issues in index.html
+Let’s update the <script> section in index.html to:
+
+Allow scrolling by not preventing default touch behavior outside the game section.
+Allow links to be tappable by ensuring touch events on links are not intercepted.
+Ensure the game only starts when tapping within the game section.
+Updated index.html
+html
+
+Preview
+
+Collapse
+
+Wrap
+
+Copy
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        
+        <!-- Meta Tags for Search Engines -->
+        <title>Chrome Dino Game - Endless T-Rex Runner</title>
+        <meta name="title" content="Chrome Dino Game - Endless T-Rex Runner">
+        <meta name="description" content="Play the classic Chrome Dinosaur Game! Run, jump, and dodge obstacles as the pixelated T-Rex in this addictive offline endless runner. How high can you score?">
+
+        <link rel="stylesheet" href="index.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        <script src="index.js"></script>
+    </head>
+    <body id="t" class="offline">
+        <!-- Header Section -->
+        <header>
+            <a href="index.html">
+                <img src="assets/Dinosaur Game.webp" alt="Logo" class="logo">
+            </a>
+        </header>
+
+        <!-- Main Content Wrapper -->
+        <div class="content-wrapper">
+            <div id="messageBox" class="sendmessage">
+                <h1 style="text-align: center; font-family: 'Open Sans', sans-serif;">Press Space to Start</h1>
+                <div class="niokbutton" onclick="okbuttonsend()"></div>
+            </div>
+            <div id="main-frame-error" class="interstitial-wrapper">
+                <div id="main-content">
+                    <div class="icon icon-offline" alt=""></div>
+                </div>
+                <div id="offline-resources">
+                    <img id="offline-resources-1x" src="assets/default_100_percent/100-offline-sprite.png">
+                    <img id="offline-resources-2x" src="assets/default_200_percent/200-offline-sprite.png">
+                    <template id="audio-resources">
+                        <!-- Audio paths will be provided by you -->
+                        <audio id="offline-sound-press" src="[YOUR_AUDIO_PATH]"></audio>
+                        <audio id="offline-sound-hit" src="[YOUR_AUDIO_PATH]"></audio>
+                        <audio id="offline-sound-reached" src="[YOUR_AUDIO_PATH]"></audio>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Ad Sections -->
+            <div class="ad-container">
+                <div class="ad-section" id="ad-section-1">
+                    <!-- Placeholder for Ad 1 -->
+                    <div class="ad-placeholder"></div>
+                </div>
+                <div class="ad-section" id="ad-section-2">
+                    <!-- Placeholder for Ad 2 -->
+                    <div class="ad-placeholder"></div>
+                </div>
+            </div>
+
+            <!-- Article Section -->
+            <div class="article-container">
+                <h1>All About the Chrome Dino Game: The Ultimate T-Rex Runner</h1>
+                <p>Welcome to the Chrome Dino Game, also known as the T-Rex Runner! This iconic endless runner game has entertained millions of users worldwide, especially when they find themselves offline. Below, we dive into the history, gameplay tips, and fun facts about this beloved game.</p>
+
+                <h2>The History of the Chrome Dino Game</h2>
+                <p>The Chrome Dino Game was introduced by Google in September 2014 as an Easter egg in the Chrome browser. It appears whenever you try to access a webpage without an internet connection, giving users a fun way to pass the time. The game was created by Chrome UX engineers Edward Jung, Sebastien Gabriel, and Alan Bettes as a playful nod to the "prehistoric" times of being offline. Fun fact: the T-Rex character is nicknamed "Stan" by the development team!</p>
+
+                <h2>How to Play the T-Rex Runner</h2>
+                <p>Playing the Chrome Dino Game is simple but addictive:</p>
+                <ul>
+                    <li><strong>Start the Game:</strong> Press the spacebar to make the T-Rex start running.</li>
+                    <li><strong>Jump Over Obstacles:</strong> Press the spacebar to jump over cacti and other obstacles.</li>
+                    <li><strong>Duck Under Pterodactyls:</strong> Press the down arrow key to duck under flying pterodactyls (they appear after you reach a certain score).</li>
+                    <li><strong>Score Points:</strong> The longer you run without hitting an obstacle, the higher your score. The game speeds up as you progress, making it more challenging!</li>
+                </ul>
+
+                <h2>Tips to Get a High Score</h2>
+                <p>Want to beat your friends' high scores? Here are some tips:</p>
+                <ul>
+                    <li><strong>Stay Focused:</strong> Keep your eyes on the horizon to anticipate obstacles early.</li>
+                    <li><strong>Time Your Jumps:</strong> Jump just before you reach a cactus to avoid mistiming.</li>
+                    <li><strong>Practice Ducking:</strong> Ducking under pterodactyls can be tricky—practice the timing to avoid crashing.</li>
+                    <li><strong>Take Breaks:</strong> If you're playing for a long time, take short breaks to avoid fatigue.</li>
+                </ul>
+
+                <h2>Fun Facts About the Chrome Dino Game</h2>
+                <p>Here are some interesting tidbits about the T-Rex Runner:</p>
+                <ul>
+                    <li>The game has been played over 270 million times per month, according to Google.</li>
+                    <li>The T-Rex's design is inspired by the pixelated graphics of retro games, giving it a nostalgic feel.</li>
+                    <li>You can play the game even when you're online by typing <code>chrome://dino</code> into your Chrome browser's address bar.</li>
+                    <li>The game features a day-night cycle: the background changes from light to dark as you reach certain score milestones.</li>
+                </ul>
+
+                <h2>Why We Love the Chrome Dino Game</h2>
+                <p>The Chrome Dino Game is more than just a way to pass the time—it's a delightful piece of internet history that brings joy to users of all ages. Its simplicity, combined with its increasing difficulty, makes it endlessly replayable. Whether you're trying to beat your high score or just having fun, the T-Rex Runner is a timeless classic.</p>
+            </div>
+        </div>
+
+        <!-- Footer Section -->
+        <footer>
+            <div class="footer-content">
+                <span class="footer-text">© 2025 Dino-Chrome. All rights reserved.</span>
+                <span class="separator">|</span>
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <span class="separator">|</span>
+                <a href="https://www.facebook.com" target="_blank">Facebook</a>
+                <span class="separator">|</span>
+                <a href="https://www.instagram.com" target="_blank">Instagram</a>
+            </div>
+        </footer>
+    </body>
     <script>
         // Function to start the game (hide the message box)
         function startGame() {
@@ -131,18 +271,20 @@
         var isGameStarted = false; // Flag to track if the game has started
 
         gameSection.addEventListener('touchstart', function(evt) {
-            evt.preventDefault(); // Prevent default touch behavior
+            // Only prevent default behavior within the game section
+            evt.preventDefault();
             if (!isGameStarted) {
                 startGame();
                 isGameStarted = true; // Set flag to prevent restarting
             }
         });
 
-        // Prevent game from starting when tapping outside the game section
+        // Allow default touch behavior (e.g., scrolling, tapping links) outside the game section
         document.addEventListener('touchstart', function(evt) {
             // Check if the tap target is outside the game section
             if (!gameSection.contains(evt.target)) {
-                evt.stopPropagation(); // Stop the event from triggering other listeners
+                // Do not prevent default behavior, allowing scrolling and link tapping
+                return;
             }
         }, { capture: true }); // Use capture phase to intercept the event early
     </script>
