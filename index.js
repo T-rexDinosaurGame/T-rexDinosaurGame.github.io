@@ -394,14 +394,12 @@
                 this.debounceResize.bind(this));
         },
 
-        /**
-         * Create the touch controller. A div that covers whole screen.
-         */
         createTouchController: function () {
-            this.touchController = document.createElement('div');
-            this.touchController.className = Runner.classes.TOUCH_CONTROLLER;
-            this.outerContainerEl.appendChild(this.touchController);
-        },
+    // Commenting out the creation of the touch controller to prevent full-screen touch capture
+    // this.touchController = document.createElement('div');
+    // this.touchController.className = Runner.classes.TOUCH_CONTROLLER;
+    // this.outerContainerEl.appendChild(this.touchController);
+      },
 
         /**
          * Debounce the resize event.
@@ -465,37 +463,37 @@
          * Canvas container width expands out to the full width.
          */
         playIntro: function () {
-            if (!this.activated && !this.crashed) {
-                this.playingIntro = true;
-                this.tRex.playingIntro = true;
+    if (!this.activated && !this.crashed) {
+        this.playingIntro = true;
+        this.tRex.playingIntro = true;
 
-                // CSS animation definition.
-                var keyframes = '@-webkit-keyframes intro { ' +
-                    'from { width:' + Trex.config.WIDTH + 'px }' +
-                    'to { width: ' + this.dimensions.WIDTH + 'px }' +
-                    '}';
-                
-                // create a style sheet to put the keyframe rule in 
-                // and then place the style sheet in the html head    
-                var sheet = document.createElement('style');
-                sheet.innerHTML = keyframes;
-                document.head.appendChild(sheet);
+        var keyframes = '@-webkit-keyframes intro { ' +
+            'from { width:' + Trex.config.WIDTH + 'px }' +
+            'to { width: ' + this.dimensions.WIDTH + 'px }' +
+            '}';
+        
+        var sheet = document.createElement('style');
+        sheet.innerHTML = keyframes;
+        document.head.appendChild(sheet);
 
-                this.containerEl.addEventListener(Runner.events.ANIM_END,
-                    this.startGame.bind(this));
+        this.containerEl.addEventListener(Runner.events.ANIM_END,
+            this.startGame.bind(this));
 
-                this.containerEl.style.webkitAnimation = 'intro .4s ease-out 1 both';
-                this.containerEl.style.width = this.dimensions.WIDTH + 'px';
+        this.containerEl.style.webkitAnimation = 'intro .4s ease-out 1 both';
+        this.containerEl.style.width = this.dimensions.WIDTH + 'px';
 
-                // if (this.touchController) {
-                //     this.outerContainerEl.appendChild(this.touchController);
-                // }
-                this.playing = true;
-                this.activated = true;
-            } else if (this.crashed) {
-                this.restart();
-            }
-        },
+        // Hide the message box when the game starts
+        var messageBox = document.getElementById("messageBox");
+        if (messageBox) {
+            messageBox.style.visibility = "hidden";
+        }
+
+        this.playing = true;
+        this.activated = true;
+    } else if (this.crashed) {
+        this.restart();
+    }
+},
 
 
         /**
@@ -634,86 +632,77 @@
          * Bind relevant key / mouse / touch listeners.
          */
         startListening: function () {
-            // Keys.
-            document.addEventListener(Runner.events.KEYDOWN, this);
-            document.addEventListener(Runner.events.KEYUP, this);
+    document.addEventListener(Runner.events.KEYDOWN, this);
+    document.addEventListener(Runner.events.KEYUP, this);
 
-            if (IS_MOBILE) {
-                // Mobile only touch devices.
-                this.touchController.addEventListener(Runner.events.TOUCHSTART, this);
-                this.touchController.addEventListener(Runner.events.TOUCHEND, this);
-                this.containerEl.addEventListener(Runner.events.TOUCHSTART, this);
-            } else {
-                // Mouse.
-                document.addEventListener(Runner.events.MOUSEDOWN, this);
-                document.addEventListener(Runner.events.MOUSEUP, this);
-            }
-        },
+    if (IS_MOBILE) {
+        // Only listen for touch events on the game container
+        this.containerEl.addEventListener(Runner.events.TOUCHSTART, this);
+        this.containerEl.addEventListener(Runner.events.TOUCHEND, this);
+    } else {
+        document.addEventListener(Runner.events.MOUSEDOWN, this);
+        document.addEventListener(Runner.events.MOUSEUP, this);
+    }
+},
 
         /**
          * Remove all listeners.
          */
         stopListening: function () {
-            document.removeEventListener(Runner.events.KEYDOWN, this);
-            document.removeEventListener(Runner.events.KEYUP, this);
+    document.removeEventListener(Runner.events.KEYDOWN, this);
+    document.removeEventListener(Runner.events.KEYUP, this);
 
-            if (IS_MOBILE) {
-                this.touchController.removeEventListener(Runner.events.TOUCHSTART, this);
-                this.touchController.removeEventListener(Runner.events.TOUCHEND, this);
-                this.containerEl.removeEventListener(Runner.events.TOUCHSTART, this);
-            } else {
-                document.removeEventListener(Runner.events.MOUSEDOWN, this);
-                document.removeEventListener(Runner.events.MOUSEUP, this);
-            }
-        },
+    if (IS_MOBILE) {
+        this.containerEl.removeEventListener(Runner.events.TOUCHSTART, this);
+        this.containerEl.removeEventListener(Runner.events.TOUCHEND, this);
+    } else {
+        document.removeEventListener(Runner.events.MOUSEDOWN, this);
+        document.removeEventListener(Runner.events.MOUSEUP, this);
+    }
+},
 
         /**
          * Process keydown.
          * @param {Event} e
          */
         onKeyDown: function (e) {
-            // Prevent native page scrolling whilst tapping on mobile.
-            if (IS_MOBILE && this.playing) {
-                e.preventDefault();
-            }
+    // Only prevent default behavior if the game is playing and the event target is the game container
+    if (IS_MOBILE && this.playing && e.target === this.containerEl) {
+        e.preventDefault();
+    }
 
-            if (e.target != this.detailsButton) {
-                if (!this.crashed && (Runner.keycodes.JUMP[e.keyCode] ||
-                    e.type == Runner.events.TOUCHSTART)) {
-                    if (!this.playing) {
-                        this.loadSounds();
-                        this.playing = true;
-                        this.update();
-                        if (window.errorPageController) {
-                            errorPageController.trackEasterEgg();
-                        }
-                    }
-                    //  Play sound effect and jump on starting the game for the first time.
-                    if (!this.tRex.jumping && !this.tRex.ducking) {
-                        this.playSound(this.soundFx.BUTTON_PRESS);
-                        this.tRex.startJump(this.currentSpeed);
-                    }
-                }
-
-                if (this.crashed && e.type == Runner.events.TOUCHSTART &&
-                    e.currentTarget == this.containerEl) {
-                    this.restart();
+    if (e.target != this.detailsButton) {
+        if (!this.crashed && (Runner.keycodes.JUMP[e.keyCode] ||
+            (e.type == Runner.events.TOUCHSTART && e.target === this.containerEl))) {
+            if (!this.playing) {
+                this.loadSounds();
+                this.playing = true;
+                this.update();
+                if (window.errorPageController) {
+                    errorPageController.trackEasterEgg();
                 }
             }
-
-            if (this.playing && !this.crashed && Runner.keycodes.DUCK[e.keyCode]) {
-                e.preventDefault();
-                if (this.tRex.jumping) {
-                    // Speed drop, activated only when jump key is not pressed.
-                    this.tRex.setSpeedDrop();
-                } else if (!this.tRex.jumping && !this.tRex.ducking) {
-                    // Duck.
-                    this.tRex.setDuck(true);
-                }
+            if (!this.tRex.jumping && !this.tRex.ducking) {
+                this.playSound(this.soundFx.BUTTON_PRESS);
+                this.tRex.startJump(this.currentSpeed);
             }
-        },
+        }
 
+        if (this.crashed && e.type == Runner.events.TOUCHSTART &&
+            e.currentTarget == this.containerEl) {
+            this.restart();
+        }
+    }
 
+    if (this.playing && !this.crashed && Runner.keycodes.DUCK[e.keyCode]) {
+        e.preventDefault();
+        if (this.tRex.jumping) {
+            this.tRex.setSpeedDrop();
+        } else if (!this.tRex.jumping && !this.tRex.ducking) {
+            this.tRex.setDuck(true);
+        }
+    }
+},
         /**
          * Process key up.
          * @param {Event} e
