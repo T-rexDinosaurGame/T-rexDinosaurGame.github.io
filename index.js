@@ -629,9 +629,9 @@
         },
 
         /**
-         * Bind relevant key / mouse / touch listeners.
-         */
-        startListening: function () {
+ * Bind relevant key / mouse / touch listeners.
+ */
+startListening: function () {
     document.addEventListener(Runner.events.KEYDOWN, this);
     document.addEventListener(Runner.events.KEYUP, this);
 
@@ -662,18 +662,19 @@
 },
 
         /**
-         * Process keydown.
-         * @param {Event} e
-         */
-        onKeyDown: function (e) {
-    // Only prevent default behavior if the game is playing and the event target is the game container
-    if (IS_MOBILE && this.playing && e.target === this.containerEl) {
+ * Process keydown.
+ * @param {Event} e
+ */
+onKeyDown: function (e) {
+    // Only prevent default behavior if the game is playing and the event target is within the game container
+    if (IS_MOBILE && this.playing && this.containerEl.contains(e.target)) {
         e.preventDefault();
     }
 
     if (e.target != this.detailsButton) {
-        if (!this.crashed && (Runner.keycodes.JUMP[e.keyCode] ||
-            (e.type == Runner.events.TOUCHSTART && e.target === this.containerEl))) {
+        // Check if the touch event target is within the containerEl
+        const isTouchInContainer = e.type == Runner.events.TOUCHSTART && this.containerEl.contains(e.target);
+        if (!this.crashed && (Runner.keycodes.JUMP[e.keyCode] || isTouchInContainer)) {
             if (!this.playing) {
                 this.loadSounds();
                 this.playing = true;
