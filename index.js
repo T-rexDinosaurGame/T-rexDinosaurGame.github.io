@@ -666,7 +666,12 @@ startListening: function () {
  * @param {Event} e
  */
 onKeyDown: function (e) {
-    // Only prevent default behavior if the game is playing and the event target is within the game container
+    // Prevent default behavior for Space bar to avoid scrolling on desktop and mobile
+    if (Runner.keycodes.JUMP[e.keyCode] && !this.playing) {
+        e.preventDefault();
+    }
+
+    // Prevent default behavior for touch events if the game is playing and the event target is within the game container
     if (IS_MOBILE && this.playing && this.containerEl.contains(e.target)) {
         e.preventDefault();
     }
