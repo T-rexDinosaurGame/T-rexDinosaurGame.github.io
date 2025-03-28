@@ -128,9 +128,22 @@
 
         // Mobile: Start game only when tapping the game section
         var gameSection = document.getElementById("main-frame-error");
+        var isGameStarted = false; // Flag to track if the game has started
+
         gameSection.addEventListener('touchstart', function(evt) {
-            evt.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
-            startGame();
+            evt.preventDefault(); // Prevent default touch behavior
+            if (!isGameStarted) {
+                startGame();
+                isGameStarted = true; // Set flag to prevent restarting
+            }
         });
+
+        // Prevent game from starting when tapping outside the game section
+        document.addEventListener('touchstart', function(evt) {
+            // Check if the tap target is outside the game section
+            if (!gameSection.contains(evt.target)) {
+                evt.stopPropagation(); // Stop the event from triggering other listeners
+            }
+        }, { capture: true }); // Use capture phase to intercept the event early
     </script>
 </html>
