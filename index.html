@@ -111,16 +111,26 @@
         </footer>
     </body>
     <script>
+        // Function to start the game (hide the message box)
+        function startGame() {
+            var box = document.getElementById("messageBox");
+            box.style.visibility = "hidden";
+        }
+
+        // Desktop: Start game on spacebar press
         document.addEventListener('keydown', function(evt) {
             evt = evt || window.event;
-            // Check if the pressed key is the spacebar (keyCode 32)
             if (evt.keyCode === 32) {
-                // Prevent the default scrolling behavior
                 evt.preventDefault();
-                // Hide the "Press Space to Start" message
-                var box = document.getElementById("messageBox");
-                box.style.visibility = "hidden";
+                startGame();
             }
+        });
+
+        // Mobile: Start game only when tapping the game section
+        var gameSection = document.getElementById("main-frame-error");
+        gameSection.addEventListener('touchstart', function(evt) {
+            evt.preventDefault(); // Prevent default touch behavior (e.g., scrolling)
+            startGame();
         });
     </script>
 </html>
